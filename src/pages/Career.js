@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import tw from "twin.macro";
 
@@ -5,7 +6,7 @@ const PageContainer = tw.div` grid mt-32 box-border gap-x-2 px-24 grid-cols-5 `;
 const Hero = tw.div`flex flex-col items-center justify-center rounded-4xl bg-purple-1000 col-span-5 py-20 mb-12`;
 const HeroTitle = tw.h1`text-4xl font-bold text-white`;
 const SearchContainer = tw.div`flex gap-1 bg-white p-2 rounded-lg w-1/3`;
-const SearchInput = tw.input`flex-1 border rounded-lg border-gray-300 pl-3 w-0`;
+const SearchInput = tw.input`flex-1 border rounded-lg border-gray-300 pl-3 w-full h-10`;
 const SearchButton = tw.button`bg-purple-1000 rounded-lg px-4 py-2 text-white`;
 const JobContainer = tw.div`flex md:col-span-4  col-span-3 flex-col gap-8  justify-center`;
 const JobCard = tw.div` flex flex-1 border-b-2 border-gray-300 p-2 pb-4`;
@@ -32,7 +33,24 @@ const Career = () => {
   const API_URL_JOBS = 'http://localhost:8000/jobs';
 
   const [jobs , setJobs ] = useState([]);
-  const [newBarber, setNewBarber] = useState([]);
+  const [value, setValue] = useState();
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    return  await axios.get(`http://localhost:8000/barbers?q=${value}`).then(
+      (response) => {
+        if(response.data){
+          setJobs(response.data)
+    
+          }
+          else{
+            setJobs(null)
+          }
+      }
+       
+    )
+  }
+
 
   useEffect(() => {
     const fetchBarbers = async () => {
@@ -115,7 +133,7 @@ const Career = () => {
   return (
     <PageContainer>
       <Hero>
-        <HeroTitle>Find a jobs</HeroTitle>
+        {/* <HeroTitle>Find a jobs</HeroTitle>
         <SearchContainer>
           <SearchInput
             placeholder="Search for a jobs"
@@ -123,7 +141,24 @@ const Career = () => {
             onChange={searchFilter}
           />
           <SearchButton>Search</SearchButton>
-        </SearchContainer>
+        </SearchContainer> */}
+         <form style={{ 
+          margin: 'auto',
+          padding: '15px',
+          maxWidth: "400px",
+          alignContent: "center"
+
+         }}
+         className="d-flex input-group w-auto"
+         onChange={handleSearch}
+         >
+           <SearchInput type="text" placeholder="search Jobs ....." value={value}
+           onChange={ (e) => {
+             setValue(e.target.value)
+           }}
+           >
+             </SearchInput>
+        </form>
       </Hero>
  <LocationContainer>
         <LocationTitle>Location</LocationTitle>
@@ -159,7 +194,7 @@ const Career = () => {
       </LocationContainer>
       <JobContainer>
         {jobs.map((jobs, index) => (
-          <JobCard>
+          <JobCard key={index}>
             <JobImg src={jobs.image} />
             <JobDescription>
               <JobTitle>{jobs.shopName}</JobTitle>

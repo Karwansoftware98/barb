@@ -48,12 +48,19 @@
   font-size: 1.7rem;
   text-align: center;
 }
-.modalContainer .body  input  {
-  padding: 5px;
+  .in  {
+  padding: 10px;
   margin-bottom: 20px;
-  width: 22rem;
+  width: full;
   border-radius: 5px;
   border: 1px solid #6415FF;
+}
+.submit{
+  padding: 10px;
+  margin-bottom: 20px;
+  width: 5rem;
+  border-radius: 5px;
+  background-color: green;
 }
 
 .modalContainer .footer {
@@ -90,4 +97,7 @@
   font-size: 24px;
   background: #ffffff;
   clip-path: circle();  
+}
+.rounded {
+  border-radius: 10px;
 }

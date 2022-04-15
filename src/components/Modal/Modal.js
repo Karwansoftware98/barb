@@ -62,14 +62,12 @@
 //     )}
 //   </Popup>
 // );
-
+import './style.css';
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Modal from '@mui/material/Modal';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import emailjs from '@emailjs/browser';
 
@@ -83,6 +81,7 @@ const style = {
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
+  rounded: 2,
   p: 4,
 };
 
@@ -94,7 +93,9 @@ export default function BasicModal(props) {
 
 
   
-
+  
+  
+ 
  
     const form = React.useRef();
 
@@ -103,32 +104,39 @@ export default function BasicModal(props) {
   
       emailjs.sendForm('service_m0u2rbb', 'template_a8mbpe2', e.target, 'M4WzK2yrWt8xsOaQt')
         .then((result) => {
-            console.log(result.text);
+          handleClose()
         }, (error) => {
-            console.log(error.text);
         });
       }
   return (
-    <div>
+    <div 
+    
+    >
       <Button onClick={handleOpen}>Book Now</Button>
       <Modal
+    className='rounded'
+
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
-      <form ref={form} onSubmit={sendEmail}>
+        <Box sx={style}
+        
+        >
+      <form ref={form} onSubmit={sendEmail} 
+      
+      >
       <Stack spacing={2}>
             <label>Date</label>
-            <input type="date" name="date" required/>
-            <input type="hidden" name="name" value={props.name}/>
-            <input type="hidden" name="email" value={props.email}/>
+            <input className='in' type="date" name="date" required/>
+            <input className='in' type="hidden" name="name" value={props.name}/>
+            <input className='in' type="hidden" name="email" value={props.email}/>
 
             <label>Time</label>
-            <input  fullWidth type="time" name="time" required/>
+            <input className='in'  type="time" name="time" required/>
             <label>Phone</label>
-            <input type="number" name="phone" required/>
+            <input className='in'type="number" name="phone" required/>
             <Grid container spacing={4}>
               <Grid item xs={4}>
               <Button variant="outlined" color="error"  onClick={handleClose}>
@@ -136,7 +144,7 @@ export default function BasicModal(props) {
           </Button> 
               </Grid>
               <Grid item xs={4}>
-              <input type="submit" value="Send" color="success"/>
+              <input className='submit' type="submit" value="Send" />
 
               </Grid>
               
